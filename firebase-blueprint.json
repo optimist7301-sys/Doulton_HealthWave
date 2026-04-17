@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "ConsultationRequest": {
+      "title": "ConsultationRequest",
+      "description": "A request for a medical consultation regarding stem cell therapy.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the patient."
+        },
+        "contact": {
+          "type": "string",
+          "description": "The contact number of the patient."
+        },
+        "concernArea": {
+          "type": "string",
+          "enum": ["무릎", "어깨", "허리", "피부", "항노화", "기타"],
+          "description": "The area of concern for the patient."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["통증 있음", "만성", "재발", "예방/관리"],
+          "description": "The current status of the patient's condition."
+        },
+        "contactMethod": {
+          "type": "string",
+          "enum": ["phone", "text", "kakao"],
+          "description": "The preferred method of contact."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time the request was created."
+        },
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who created the request (if authenticated)."
+        }
+      },
+      "required": ["name", "contact", "concernArea", "status", "contactMethod", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/consultations/{consultationId}": {
+      "schema": "ConsultationRequest",
+      "description": "Collection of consultation requests."
+    }
+  }
+}

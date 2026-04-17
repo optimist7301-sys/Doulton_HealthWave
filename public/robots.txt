@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+Sitemap: https://ais-pre-fyqwax2sgui23k3k3tod4h-420346560313.asia-northeast1.run.app/sitemap.xml
