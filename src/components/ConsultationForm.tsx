@@ -9,12 +9,23 @@ export default function ConsultationForm() {
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
-    concernArea: '무릎' as ConcernArea,
+    concernArea: '선택' as ConcernArea,
     status: '통증 있음' as PatientStatus,
-    contactMethod: 'phone' as 'phone' | 'text' | 'kakao'
+    contactMethod: 'phone' as 'phone' | 'text' | 'kakao',
+    privacyAgreed: false
   });
 
-  const concernAreas: ConcernArea[] = ['무릎', '어깨', '허리', '피부', '항노화', '기타'];
+  const concernAreas: ConcernArea[] = [
+    '선택',
+    '만성질환(당뇨병,고혈압,만성신부전,간경화,심부전)',
+    '퇴행성 관절염(무릅,어깨,허리,류머티즈)',
+    '자폐,ADHD',
+    '뇌 및 신경질환(파킨슨,치매,알츠하이머,척수·신경손상)',
+    '만성폐쇄성폐질환',
+    '피부 및 기타질환(피부재생,아토피,안티에이징)',
+    '성기능향상및 질환(전립선비대증,요실금)',
+    '기타'
+  ];
 
   useEffect(() => {
     if (remainingSpots > 1) {
@@ -27,6 +38,14 @@ export default function ConsultationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.privacyAgreed) {
+      alert('개인정보 수집 및 이용에 동의해주세요.');
+      return;
+    }
+    if (formData.concernArea === '선택') {
+      alert('관심 부위를 선택해주세요.');
+      return;
+    }
     setStatus('submitting');
 
     try {
@@ -165,6 +184,27 @@ export default function ConsultationForm() {
                     <option key={area} value={area} className="bg-brand-deep">{area}</option>
                   ))}
                 </select>
+              </div>
+
+              <div className="flex items-start gap-2 pt-2">
+                <input
+                  required
+                  id="privacy-main"
+                  type="checkbox"
+                  className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 text-brand-accent focus:ring-brand-accent cursor-pointer"
+                  checked={formData.privacyAgreed}
+                  onChange={e => setFormData({ ...formData, privacyAgreed: e.target.checked })}
+                />
+                <label htmlFor="privacy-main" className="text-[11px] text-white/70 leading-tight cursor-pointer flex-1">
+                  개인정보 수집 및 이용 동의 (필수)
+                </label>
+                <button 
+                  type="button"
+                  onClick={() => alert('개인정보 수집 및 이용 안내\n\n1. 수집항목: 성함, 연락처, 관심부위\n2. 수집목적: 서비스 이용에 따른 본인확인 및 상담 서비스 제공\n3. 보유기간: 상담 완료 후 1년 (고객 요청 시 파기)')}
+                  className="text-[10px] text-white/40 underline hover:text-white/60"
+                >
+                  상세보기
+                </button>
               </div>
 
               <button
