@@ -12,6 +12,7 @@ import Process from './components/Process';
 import ConsultationForm from './components/ConsultationForm';
 import Footer from './components/Footer';
 import MobileStickyCta from './components/MobileStickyCta';
+import BackgroundMusic from './components/BackgroundMusic';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <ConsultationForm />
       </main>
       <Footer />
+      <BackgroundMusic />
       <MobileStickyCta />
     </div>
   );
