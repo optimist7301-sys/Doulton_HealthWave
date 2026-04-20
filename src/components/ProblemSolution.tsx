@@ -45,7 +45,7 @@ export default function ProblemSolution() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative p-12 rounded-[32px] bg-brand-deep text-white shadow-2xl"
+            className="relative p-6 md:p-12 rounded-[32px] bg-brand-deep text-white shadow-2xl"
           >
             <h3 className="text-3xl font-bold mb-8">
               Doulton Healthwave의 <br />

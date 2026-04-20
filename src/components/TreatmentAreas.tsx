@@ -45,8 +45,8 @@ export default function TreatmentAreas() {
             viewport={{ once: true }}
           >
             <div className="badge-sleek">Treatment Areas</div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-brand-deep mb-6 leading-tight">
-              MSC 치료로 효과를 볼 수 있는 <br />
+            <h2 className="text-4xl md:text-5xl font-extrabold text-brand-deep mb-6 leading-tight text-balance">
+              MSC 치료로 효과를 볼 수 있는 <br className="hidden md:block" />
               <span className="text-brand-accent">대표 질환들</span>
             </h2>
             <p className="text-text-sub leading-relaxed">
@@ -64,7 +64,7 @@ export default function TreatmentAreas() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="p-8 rounded-[32px] bg-brand-light border border-line hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group"
+              className="p-6 md:p-8 rounded-[32px] bg-brand-light border border-line hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group"
             >
               <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-brand-accent mb-6 shadow-sm group-hover:bg-brand-accent group-hover:text-white transition-all">
                 <area.icon className="w-7 h-7" />

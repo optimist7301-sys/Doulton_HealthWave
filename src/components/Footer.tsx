@@ -33,6 +33,25 @@ export default function Footer() {
               </a>
             </div>
 
+            <div className="bg-brand-light/50 border border-brand-accent/20 rounded-2xl p-4 max-w-sm mb-4">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-6 h-6 bg-[#FAE100] rounded flex items-center justify-center text-[#3C1E1E]">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.557 1.707 4.8 4.27 6.054-.188.702-.682 2.545-.78 2.926-.124.481.178.476.37.351.15-.098 2.39-1.62 3.357-2.267.575.082 1.17.126 1.783.126 4.97 0 9-3.186 9-7.115S16.97 3 12 3z"/></svg>
+                </div>
+                <span className="text-[10px] font-bold text-brand-deep uppercase tracking-wider">KakaoTalk Consultation</span>
+              </div>
+              <p className="text-xs text-brand-deep/70 mb-2">상담연결 지연시 카톡으로 문의주세요</p>
+              <a 
+                href="https://open.kakao.com/o/sMu6Ru7h" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-extrabold text-brand-deep hover:text-brand-accent transition-colors"
+              >
+                카카오톡으로 문의하기
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
+            </div>
+
             <div className="bg-brand-light/50 border border-brand-accent/20 rounded-2xl p-4 max-w-sm">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-6 h-6 bg-[#03C75A] rounded flex items-center justify-center text-white text-[10px] font-black">N</div>

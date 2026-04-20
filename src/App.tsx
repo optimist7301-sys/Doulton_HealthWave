@@ -11,6 +11,7 @@ import MedicalTeam from './components/MedicalTeam';
 import Process from './components/Process';
 import ConsultationForm from './components/ConsultationForm';
 import Footer from './components/Footer';
+import MobileStickyCta from './components/MobileStickyCta';
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <ConsultationForm />
       </main>
       <Footer />
+      <MobileStickyCta />
     </div>
   );
 }

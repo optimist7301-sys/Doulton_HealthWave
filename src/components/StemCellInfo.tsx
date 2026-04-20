@@ -28,9 +28,9 @@ export default function StemCellInfo() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-extrabold text-brand-deep mb-6 leading-tight"
+            className="text-4xl md:text-5xl font-extrabold text-brand-deep mb-6 leading-tight text-balance"
           >
-            재생의 골든 타임을 위한 <br />
+            재생의 골든 타임을 위한 <br className="hidden md:block" />
             <span className="text-brand-accent text-[1.1em] font-black">와튼젤리(Wharton's Jelly)</span> 줄기세포의 힘
           </motion.h2>
           <motion.p
@@ -71,7 +71,7 @@ export default function StemCellInfo() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="bg-white p-10 rounded-[32px] shadow-sm hover:shadow-xl transition-all border border-brand-deep/5 group"
+              className="bg-white p-6 md:p-10 rounded-[32px] shadow-sm hover:shadow-xl transition-all border border-brand-deep/5 group"
             >
               <div className="w-16 h-16 rounded-2xl bg-brand-light flex items-center justify-center text-brand-accent mb-8 group-hover:scale-110 transition-transform">
                 <feature.icon className="w-8 h-8" />
@@ -86,7 +86,7 @@ export default function StemCellInfo() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="mt-20 p-12 rounded-[40px] bg-gradient-to-br from-brand-deep to-brand-accent/80 text-white relative overflow-hidden"
+          className="mt-20 p-6 md:p-12 rounded-[40px] bg-gradient-to-br from-brand-deep to-brand-accent/80 text-white relative overflow-hidden"
         >
           <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
             <div>

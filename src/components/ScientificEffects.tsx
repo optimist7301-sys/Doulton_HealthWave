@@ -68,7 +68,7 @@ export default function ScientificEffects() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {effects.map((effect, index) => (
             <motion.div
               key={index}
@@ -76,7 +76,7 @@ export default function ScientificEffects() {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.05 }}
               viewport={{ once: true }}
-              className="p-8 rounded-[32px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-brand-accent/50 transition-all duration-300 group"
+              className="p-6 md:p-8 rounded-[32px] bg-white/5 border border-white/10 hover:bg-white/10 hover:border-brand-accent/50 transition-all duration-300 group"
             >
               <div className="w-12 h-12 rounded-2xl bg-brand-accent/10 flex items-center justify-center text-brand-accent mb-6 group-hover:scale-110 transition-transform">
                 <effect.icon className="w-6 h-6" />

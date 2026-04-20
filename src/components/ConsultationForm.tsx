@@ -1,14 +1,11 @@
-import { useState, FormEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Send, Phone, MessageSquare, MessageCircle, CheckCircle } from 'lucide-react';
+import { CheckCircle, Loader2 } from 'lucide-react';
 import { ConcernArea, PatientStatus } from '../types';
-import { db, OperationType, handleFirestoreError } from '../lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function ConsultationForm() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'succeeded' | 'error'>('idle');
+  const [remainingSpots, setRemainingSpots] = useState(3);
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
@@ -18,30 +15,49 @@ export default function ConsultationForm() {
   });
 
   const concernAreas: ConcernArea[] = ['무릎', '어깨', '허리', '피부', '항노화', '기타'];
-  const statuses: PatientStatus[] = ['통증 있음', '만성', '재발', '예방/관리'];
 
-  const handleSubmit = async (e: FormEvent) => {
+  useEffect(() => {
+    if (remainingSpots > 1) {
+      const timer = setTimeout(() => {
+        setRemainingSpots(prev => prev - (Math.random() > 0.7 ? 1 : 0));
+      }, 15000);
+      return () => clearTimeout(timer);
+    }
+  }, [remainingSpots]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError(null);
-    
+    setStatus('submitting');
+
     try {
-      const path = 'consultations';
-      await addDoc(collection(db, path), {
-        ...formData,
-        createdAt: serverTimestamp(),
+      const response = await fetch('https://formspree.io/f/xkokzvwk', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...formData,
+          source: 'Website Main Form',
+          device: window.innerWidth < 768 ? 'Mobile' : 'Desktop',
+          _subject: `[DH 웹사이트 상담신청] ${formData.name || '고객'}님`,
+          _screen_size: `${window.innerWidth}x${window.innerHeight}`,
+          user_agent: navigator.userAgent
+        })
       });
-      setIsSubmitted(true);
-    } catch (err) {
-      console.error('Submission error:', err);
-      setError('상담 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      handleFirestoreError(err, OperationType.CREATE, 'consultations');
-    } finally {
-      setIsLoading(false);
+
+      if (response.ok) {
+        setStatus('succeeded');
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      setStatus('error');
     }
   };
 
-  if (isSubmitted) {
+  if (status === 'succeeded') {
     return (
       <section id="consultation" className="py-24 bg-brand-deep text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
@@ -58,11 +74,11 @@ export default function ConsultationForm() {
               빠른 시일 내에 전문 상담원이 연락드리겠습니다. <br />
               Doulton Healthwave를 믿고 찾아주셔서 감사합니다.
             </p>
-            <button
-              onClick={() => setIsSubmitted(false)}
+            <button 
+              onClick={() => setStatus('idle')}
               className="text-brand-accent font-bold hover:underline"
             >
-              새로운 상담 신청하기
+              다시 신청하기
             </button>
           </motion.div>
         </div>
@@ -115,6 +131,7 @@ export default function ConsultationForm() {
                 <label className="text-[12px] font-semibold opacity-70 uppercase tracking-wider">성함</label>
                 <input
                   required
+                  name="name"
                   type="text"
                   placeholder="홍길동"
                   className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 focus:border-brand-accent outline-none transition-all text-sm"
@@ -127,6 +144,7 @@ export default function ConsultationForm() {
                 <label className="text-[12px] font-semibold opacity-70 uppercase tracking-wider">연락처</label>
                 <input
                   required
+                  name="contact"
                   type="tel"
                   placeholder="010-0000-0000"
                   className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 focus:border-brand-accent outline-none transition-all text-sm"
@@ -138,6 +156,7 @@ export default function ConsultationForm() {
               <div className="space-y-2">
                 <label className="text-[12px] font-semibold opacity-70 uppercase tracking-wider">관심 부위</label>
                 <select
+                  name="concernArea"
                   className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 focus:border-brand-accent outline-none transition-all text-sm appearance-none"
                   value={formData.concernArea}
                   onChange={e => setFormData({ ...formData, concernArea: e.target.value as ConcernArea })}
@@ -149,16 +168,20 @@ export default function ConsultationForm() {
               </div>
 
               <button
-                disabled={isLoading}
+                disabled={status === 'submitting'}
                 type="submit"
-                className="w-full py-4 rounded-lg bg-brand-accent text-white font-bold text-base hover:bg-brand-accent/90 transition-all shadow-lg shadow-brand-accent/20 flex items-center justify-center gap-3 disabled:opacity-50 mt-4"
+                className="w-full py-4 rounded-lg bg-brand-accent text-white font-bold text-base hover:bg-brand-accent/90 transition-all shadow-lg shadow-brand-accent/20 flex items-center justify-center gap-3 mt-4 disabled:opacity-50"
               >
-                {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                {status === 'submitting' ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   "상담 신청하기"
                 )}
               </button>
+              
+              {status === 'error' && (
+                <p className="text-xs text-red-400 text-center mt-2">전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.</p>
+              )}
               
               <p className="text-[11px] opacity-50 text-center leading-relaxed mt-6">
                 개인정보는 상담 목적으로만 사용되며 안전하게 보호됩니다.<br />
@@ -168,7 +191,7 @@ export default function ConsultationForm() {
               <div className="flex justify-between items-center pt-8 border-t border-white/10 mt-8">
                 <div className="text-[12px] flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  오늘 상담 가능 인원 잔여 3명
+                  오늘 상담 가능 인원 잔여 {remainingSpots}명
                 </div>
                 <div className="text-[12px]">1:1 집중 케어 원칙</div>
               </div>

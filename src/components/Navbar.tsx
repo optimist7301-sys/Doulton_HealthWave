@@ -42,6 +42,14 @@ export default function Navbar() {
               </a>
             ))}
             <a
+              href="https://open.kakao.com/o/sMu6Ru7h"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 bg-[#FAE100] text-[#3C1E1E] px-3 py-1.5 rounded-lg text-[12px] font-bold shadow-sm hover:translate-y-[-1px] transition-all"
+            >
+              카톡문의
+            </a>
+            <a
               href="#consultation"
               className="text-brand-accent text-sm font-bold hover:underline"
             >
@@ -68,6 +76,15 @@ export default function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden bg-paper border-b border-brand-deep/10 px-4 pt-2 pb-6"
         >
+          <a
+            href="https://open.kakao.com/o/sMu6Ru7h"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 bg-[#FAE100] text-[#3C1E1E] w-full py-4 rounded-xl font-bold mb-4 shadow-md"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.557 1.707 4.8 4.27 6.054-.188.702-.682 2.545-.78 2.926-.124.481.178.476.37.351.15-.098 2.39-1.62 3.357-2.267.575.082 1.17.126 1.783.126 4.97 0 9-3.186 9-7.115S16.97 3 12 3z"/></svg>
+            카카오톡으로 문의하기
+          </a>
           {navItems.map((item) => (
             <a
               key={item.name}
